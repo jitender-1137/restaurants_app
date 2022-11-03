@@ -31,13 +31,19 @@ public class QrCode {
 	@Column(name = "table_no")
 	private String tableNo;
 
-	@Column(name = "enable")
+	@Column(name = "enable", columnDefinition = "true")
 	private boolean enable;
 
+	@Column(name = "reserved", columnDefinition = "false")
+	private boolean reserved;
+
 	@Column(name = "created_at")
-	private String createdAt;
+	private Long createdAt;
 
 	@Column(name = "updated_at")
-	private String updatedAt;
+	private Long updatedAt;
+
+	@Column(name = "url")
+	private String url;
 
 }
