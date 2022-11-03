@@ -77,6 +77,18 @@
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
 			<version>2.7.5</version>
 		</dependency>
+		<!-- Qr Code -->
+		<dependency>
+			<groupId>com.google.zxing</groupId>
+			<artifactId>core</artifactId>
+			<version>3.3.2</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.zxing</groupId>
+			<artifactId>javase</artifactId>
+			<version>3.3.2</version>
+		</dependency>
+		<!-- jwt token -->
 		<dependency>
 			<groupId>io.jsonwebtoken</groupId>
 			<artifactId>jjwt</artifactId>

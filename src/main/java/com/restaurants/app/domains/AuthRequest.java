@@ -1,4 +1,4 @@
-package com.restaurants.app.entity;
+package com.restaurants.app.domains;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

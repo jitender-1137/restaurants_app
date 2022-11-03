@@ -1,12 +1,13 @@
-package com.restaurants.app.service;
+package com.restaurants.app.service.impl;
 
 import com.restaurants.app.co.UserCo;
 import com.restaurants.app.dao.UserDao;
+import com.restaurants.app.domains.User;
 import com.restaurants.app.dto.ComparativeRelationAndValue;
 import com.restaurants.app.dto.UserDto;
+import com.restaurants.app.service.UserService;
 import com.restaurants.app.dto.EntryItem;
 import com.restaurants.app.dto.GenericSearchFilter;
-import com.restaurants.app.entity.User;
 import com.restaurants.app.utils.CommonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;

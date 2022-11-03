@@ -1,7 +1,8 @@
 package com.restaurants.app.service;
 
 import com.restaurants.app.dao.UserDao;
-import com.restaurants.app.entity.User;
+import com.restaurants.app.domains.User;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

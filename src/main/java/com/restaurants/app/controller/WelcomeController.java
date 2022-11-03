@@ -1,7 +1,8 @@
 package com.restaurants.app.controller;
 
 import com.restaurants.app.auth.utils.JwtUtils;
-import com.restaurants.app.entity.AuthRequest;
+import com.restaurants.app.domains.AuthRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
