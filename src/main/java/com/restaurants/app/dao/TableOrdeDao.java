@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface TableOrdeDao extends JpaRepository<TableOrder, Long> {
-    boolean isTableReserved(String tableNo);
+
 }

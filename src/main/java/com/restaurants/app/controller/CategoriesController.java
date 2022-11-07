@@ -2,12 +2,10 @@ package com.restaurants.app.controller;
 
 import javax.validation.Valid;
 
+import com.restaurants.app.dto.GenericSearchFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.restaurants.app.co.CategoriesCo;
 import com.restaurants.app.dto.CommonObjectDto;
@@ -22,21 +20,29 @@ import lombok.extern.slf4j.Slf4j;
 @Validated
 @Slf4j
 public class CategoriesController {
-	
-	@Autowired
-	protected CategoriesService categoriesService;
 
-	@PostMapping("/add")
-	public ResponseDto addCategory(@Valid @RequestBody CategoriesCo categoriesCo) {
-	
-		CommonObjectDto commonObjectDto = categoriesService.addCategory(categoriesCo);
-		
-		return new SuccessResponseDto<>(commonObjectDto, "Category added successfully");
-	}
-	
-	public ResponseDto getCategories() {
-		CommonObjectDto commonObjectDto = categoriesService.getAllCategories();
-		return new SuccessResponseDto<>(commonObjectDto.getData(), "categories fetch successfully");
-	}
+    @Autowired
+    protected CategoriesService categoriesService;
+
+    @PostMapping("/add")
+    public ResponseDto addCategory(@Valid @RequestBody CategoriesCo categoriesCo) {
+
+        CommonObjectDto commonObjectDto = categoriesService.addCategory(categoriesCo);
+
+        return new SuccessResponseDto<>(commonObjectDto.getData(), "Category added successfully");
+    }
+
+    @GetMapping("/getCategories")
+    public ResponseDto getCategories(@RequestParam(required = false) Integer pageNumber,
+                                     @RequestParam(required = false) Integer pageSize) {
+        CommonObjectDto commonObjectDto = categoriesService.getAllCategories(pageNumber, pageSize);
+        return new SuccessResponseDto<>(commonObjectDto.getData(), "categories fetch successfully");
+    }
+
+    @DeleteMapping("/deleteCategory/{id}")
+    public ResponseDto deleteCategory(@PathVariable Long id) {
+        categoriesService.deleteCategory(id);
+        return new SuccessResponseDto("category delete successfully");
+    }
 
 }

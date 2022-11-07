@@ -9,6 +9,7 @@ public interface CategoriesService {
 
 	CommonObjectDto addCategory(@Valid CategoriesCo categoriesCo);
 
-	CommonObjectDto getAllCategories();
+	CommonObjectDto getAllCategories(Integer perPage, Integer pageSize);
 
+	void deleteCategory(Long id);
 }

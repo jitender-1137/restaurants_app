@@ -5,6 +5,8 @@ import java.util.Optional;
 
 import javax.validation.Valid;
 
+import com.restaurants.app.enums.CategoryLevel;
+import com.restaurants.app.utils.CommonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,40 +20,95 @@ import com.restaurants.app.service.CategoriesService;
 @Service
 public class CategoriesServiceImpl implements CategoriesService {
 
-	@Autowired
-	protected CategoriesDao categoriesDao;
+    @Autowired
+    protected CategoriesDao categoriesDao;
 
-	@Override
-	public CommonObjectDto addCategory(@Valid CategoriesCo categoriesCo) {
-		Categories categories = new Categories();
-		CommonObjectDto commonObjectDto = new CommonObjectDto();
+    @Override
+    public CommonObjectDto addCategory(@Valid CategoriesCo categoriesCo) {
+        Categories categories = new Categories();
 
-		categories.setCategoryName(categoriesCo.getCategoryName());
-		categories.setChildCategory(categoriesCo.getChildCategory());
-		categories.setParentCategory(categoriesCo.getParentCategory());
-		categories.setUpdtedAt(System.currentTimeMillis());
-		categories.setCreatedAt(System.currentTimeMillis());
-		categories.setActive(true);
-		categories.setExists(true);
+        CommonObjectDto commonObjectDto = new CommonObjectDto();
 
-		Categories categories2 = categoriesDao.save(categories);
+        String categoryName = validteCategoryName(categoriesCo);
+        validateCategoryLevel(categoriesCo);
 
-		if (categories2.getCategoryId() == null || categories2.getCategoryId() == 0) {
-			throw new ServiceException("005");
-		}
+        categories.setCategoryName(categoriesCo.getCategoryName());
+        categories.setSlug(categoryName);
+        categories.setParentCategory(categoriesCo.getParentCategory());
+        categories.setUpdtedAt(System.currentTimeMillis());
+        categories.setCreatedAt(System.currentTimeMillis());
+        categories.setLevel(categoriesCo.getLevel());
+        categories.setActive(true);
+        categories.setExists(true);
 
-		commonObjectDto.setData(categories2);
+        Categories categories2 = categoriesDao.save(categories);
 
-		return commonObjectDto;
-	}
+        if (categories2.getCategoryId() == null || categories2.getCategoryId() == 0) {
+            throw new ServiceException("005");
+        }
 
-	@Override
-	public CommonObjectDto getAllCategories() {
-		CommonObjectDto commonObjectDto = new CommonObjectDto();
+        commonObjectDto.setData(categories2);
+        return commonObjectDto;
+    }
 
-		List<Categories> categoriesList = categoriesDao.findAll();
-		commonObjectDto.setData(categoriesList);
-		return commonObjectDto;
-	}
+    private String validteCategoryName(CategoriesCo categoriesCo) {
+        String categoryName = "";
+        categoryName = CommonUtil.removeWhiteSpace(categoriesCo.getCategoryName());
+        categoryName = CommonUtil.toSmallerCase(categoryName);
+
+        Categories categories = categoriesDao.findByCategoryName(categoryName);
+        if (categories != null)
+            throw new ServiceException("014");
+        return categoryName;
+    }
+
+    private void validateCategoryLevel(CategoriesCo categoriesCo) {
+        Categories exsistingCategory = new Categories();
+        if (categoriesCo.getParentCategory() != null && categoriesCo.getParentCategory() != 0) {
+            exsistingCategory = categoriesDao.findByParentId(categoriesCo.getParentCategory());
+            if (exsistingCategory == null) throw new ServiceException("006");
+        }
+
+        if (!(CategoryLevel.L1.level.equals(categoriesCo.getLevel()) || CategoryLevel.L2.level.equals(categoriesCo.getLevel()) || CategoryLevel.L3.level.equals(categoriesCo.getLevel())))
+            throw new ServiceException("011");
+
+        else if (CategoryLevel.L1.level.equals(categoriesCo.getLevel())) {
+            if (categoriesCo.getParentCategory() != null && categoriesCo.getParentCategory() != 0)
+                throw new ServiceException("007");
+
+        } else if (CategoryLevel.L2.level.equals(categoriesCo.getLevel())) {
+            if (categoriesCo.getParentCategory() == null || categoriesCo.getParentCategory() == 0)
+                throw new ServiceException("013");
+            else if (!CategoryLevel.L1.level.equals(exsistingCategory.getLevel())) {
+                throw new ServiceException("012");
+            }
+        } else if (CategoryLevel.L3.level.equals(categoriesCo.getLevel())) {
+            if (categoriesCo.getParentCategory() == null || categoriesCo.getParentCategory() == 0)
+                throw new ServiceException("013");
+            else if (!CategoryLevel.L2.level.equals(exsistingCategory.getLevel())) throw new ServiceException("010");
+        }
+    }
+
+    @Override
+    public CommonObjectDto getAllCategories(Integer perPage, Integer pageSize) {
+        CommonObjectDto commonObjectDto = new CommonObjectDto();
+
+        List<Categories> categoriesList = categoriesDao.findAllExistingCategories(perPage, pageSize);
+        commonObjectDto.setData(categoriesList);
+        return commonObjectDto;
+    }
+
+    @Override
+    public void deleteCategory(Long id) {
+        Categories categories = new Categories();
+        categories = categoriesDao.findByIdAndExist(id);
+        if (categories != null) {
+            categories.setUpdtedAt(System.currentTimeMillis());
+            categories.setActive(false);
+            categories.setExists(false);
+            categoriesDao.save(categories);
+        } else
+            throw new ServiceException("015");
+    }
 
 }

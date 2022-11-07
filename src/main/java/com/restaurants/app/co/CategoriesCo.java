@@ -13,13 +13,14 @@ import lombok.ToString;
 @AllArgsConstructor
 public class CategoriesCo {
 
-	private Long categoryId;
+    private Long categoryId;
 
-	@NotBlank
-	private String categoryName;
+    @NotBlank
+    private String categoryName;
 
-	private Long parentCategory;
+    private Long parentCategory;
 
-	private Long childCategory;
+    @NotBlank
+    private String level;
 
 }

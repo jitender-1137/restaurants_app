@@ -19,7 +19,6 @@ public class TableOrderServiceImpl implements TableOrderService {
     public CommonObjectDto validateTable(String qrCode) {
         QrCode qrCode1 = CommonUtil.convertToObject(qrCode, QrCode.class);
 
-        boolean tableReserved = tableOrdeDao.isTableReserved(qrCode1.getTableNo());
         return null;
     }
 }

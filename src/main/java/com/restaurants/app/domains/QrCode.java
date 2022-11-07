@@ -31,10 +31,10 @@ public class QrCode {
 	@Column(name = "table_no")
 	private String tableNo;
 
-	@Column(name = "enable", columnDefinition = "true")
+	@Column(name = "enable", nullable = false)
 	private boolean enable;
 
-	@Column(name = "reserved", columnDefinition = "false")
+	@Column(name = "reserved", nullable = false)
 	private boolean reserved;
 
 	@Column(name = "created_at")

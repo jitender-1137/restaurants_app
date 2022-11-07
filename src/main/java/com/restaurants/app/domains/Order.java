@@ -8,7 +8,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-@TableOrder(name = "order")
+@Table(name = "orders")
 @Getter
 @Setter
 @ToString
@@ -18,7 +18,7 @@ public class Order {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "order_id")
-	private String orderId;
+	private Long orderId;
 
 	@Column(name = "user_name")
 	private String name;
@@ -32,10 +32,10 @@ public class Order {
 	@Column(name = "finish_order_at")
 	private Long finishOrderdAt;
 
-	@Column(name = "checkout")
+	@Column(name = "checkout" , nullable = true)
 	private boolean checkout;
 
-	@Column(name = "items")
-	private Items items;
+//	@Column(name = "items")
+//	private Items items;
 
 }
