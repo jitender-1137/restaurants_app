@@ -155,4 +155,9 @@ public class QrCodeGeneratorServiceImpl implements QrCodeGeneratorService {
             throw new ServiceException("018");
         }
     }
+
+    @Override
+    public CommonObjectDto updateQrCodes(List<TableQrCodeCo> tableQrCodeCoList) {
+        return null;
+    }
 }
