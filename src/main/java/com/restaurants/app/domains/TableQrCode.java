@@ -13,37 +13,34 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-@Table(name = "qr_code")
+@Table(name = "table_qr_code")
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
-public class QrCode {
+public class TableQrCode {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "qr_code_id")
-	private Long qrCodeId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "table_qr_id")
+    private Long tableQRId;
 
-	@Column(name = "table_name")
-	private String tableName;
+    @Column(name = "table_name")
+    private String tableName;
 
-	@Column(name = "table_no")
-	private String tableNo;
+    @Column(name = "table_no")
+    private Long tableNo;
 
 	@Column(name = "enable", nullable = false)
 	private boolean enable;
 
-	@Column(name = "reserved", nullable = false)
-	private boolean reserved;
-
 	@Column(name = "created_at")
 	private Long createdAt;
 
-	@Column(name = "updated_at")
-	private Long updatedAt;
+    @Column(name = "updated_at")
+    private Long updatedAt;
 
-	@Column(name = "url")
-	private String url;
+    @Column(name = "url")
+    private String url;
 
 }

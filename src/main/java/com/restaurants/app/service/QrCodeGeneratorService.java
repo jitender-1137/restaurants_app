@@ -1,10 +1,14 @@
 package com.restaurants.app.service;
 
-import com.restaurants.app.co.QrCodeCo;
+import com.restaurants.app.co.TableQrCodeCo;
 import com.restaurants.app.dto.CommonObjectDto;
 
+import javax.validation.Valid;
+
 public interface QrCodeGeneratorService {
+    CommonObjectDto generateNewQR(TableQrCodeCo tableQrCodeCo);
 
-	CommonObjectDto generateQR(QrCodeCo qrCodeCo);
+    CommonObjectDto fetchAllQrCodes();
 
+    void deleteQrCode(Long id);
 }

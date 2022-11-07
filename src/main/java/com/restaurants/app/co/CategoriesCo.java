@@ -23,4 +23,6 @@ public class CategoriesCo {
     @NotBlank
     private String level;
 
+    private boolean isActive;
+
 }

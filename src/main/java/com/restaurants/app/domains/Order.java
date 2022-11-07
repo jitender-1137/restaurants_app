@@ -32,7 +32,7 @@ public class Order {
 	@Column(name = "finish_order_at")
 	private Long finishOrderdAt;
 
-	@Column(name = "checkout" , nullable = true)
+	@Column(name = "checkout")
 	private boolean checkout;
 
 //	@Column(name = "items")

@@ -1,10 +1,7 @@
 package com.restaurants.app.service.impl;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.restaurants.app.dao.QrCodeGeneratorDao;
 import com.restaurants.app.dao.TableOrdeDao;
-import com.restaurants.app.domains.QrCode;
-import com.restaurants.app.domains.TableOrder;
+import com.restaurants.app.domains.TableQrCode;
 import com.restaurants.app.dto.CommonObjectDto;
 import com.restaurants.app.utils.CommonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +14,7 @@ public class TableOrderServiceImpl implements TableOrderService {
     protected TableOrdeDao tableOrdeDao;
     @Override
     public CommonObjectDto validateTable(String qrCode) {
-        QrCode qrCode1 = CommonUtil.convertToObject(qrCode, QrCode.class);
+        TableQrCode tableQrCode1 = CommonUtil.convertToObject(qrCode, TableQrCode.class);
 
         return null;
     }

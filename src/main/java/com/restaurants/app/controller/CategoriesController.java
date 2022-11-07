@@ -15,6 +15,8 @@ import com.restaurants.app.service.CategoriesService;
 
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/v1/categories")
 @Validated
@@ -43,6 +45,12 @@ public class CategoriesController {
     public ResponseDto deleteCategory(@PathVariable Long id) {
         categoriesService.deleteCategory(id);
         return new SuccessResponseDto("category delete successfully");
+    }
+
+    @PutMapping("/updateCategory")
+    public ResponseDto updateCategory(@RequestBody @Valid List<CategoriesCo> categoriesCos) {
+        CommonObjectDto commonObjectDto = categoriesService.updateCategory(categoriesCos);
+        return new SuccessResponseDto(commonObjectDto.getData(), "categories updated successfully");
     }
 
 }

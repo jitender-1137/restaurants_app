@@ -1,5 +1,6 @@
 package com.restaurants.app.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -109,6 +110,28 @@ public class CategoriesServiceImpl implements CategoriesService {
             categoriesDao.save(categories);
         } else
             throw new ServiceException("015");
+    }
+
+    @Override
+    public CommonObjectDto updateCategory(List<CategoriesCo> categoriesCos) {
+        Categories categories = new Categories();
+        List<Categories> categoriesList = new ArrayList<>();
+
+        for (CategoriesCo categoriesCo : categoriesCos) {
+            String categoryName = validteCategoryName(categoriesCo);
+            validateCategoryLevel(categoriesCo);
+
+            categories = CommonUtil.convert(categoriesCo, Categories.class);
+
+            categories.setSlug(categoryName);
+            categories.setUpdtedAt(System.currentTimeMillis());
+            categoriesList.add(categories);
+
+        }
+        List<Categories> categoriesList1 = categoriesDao.saveAll(categoriesList);
+        CommonObjectDto commonObjectDto = new CommonObjectDto();
+        commonObjectDto.setData(categoriesList1);
+        return commonObjectDto;
     }
 
 }
