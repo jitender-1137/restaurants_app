@@ -12,7 +12,6 @@ import com.restaurants.app.dto.SuccessResponseDto;
 import com.restaurants.app.service.QrCodeGeneratorService;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @RestController
 @RequestMapping("v1")
@@ -30,21 +29,14 @@ public class QrCodeGeneratorController {
     }
 
     @GetMapping("/getQrCode")
-    public ResponseDto fetchData() {
+    public ResponseDto fetchData(){
         CommonObjectDto commonObjectDto = qrCodeGeneratorService.fetchAllQrCodes();
         return new SuccessResponseDto(commonObjectDto.getData(), "Fetch Data Successfully");
     }
 
     @DeleteMapping("/deleteQrCode/{id}")
-    public ResponseDto deleteQRCode(@PathVariable Long id) {
+    public ResponseDto deleteQRCode(@PathVariable Long id){
         qrCodeGeneratorService.deleteQrCode(id);
-        return new SuccessResponseDto(id, "Delete Successfully");
+        return new SuccessResponseDto(id,"Delete Successfully");
     }
-
-    @PutMapping("/updateQrCode")
-    public ResponseDto updateQRCode(@RequestBody @Valid List<TableQrCodeCo> tableQrCodeCoList) {
-        CommonObjectDto commonObjectDto = qrCodeGeneratorService.updateQrCodes(tableQrCodeCoList);
-        return new SuccessResponseDto(commonObjectDto, "QR Code update Successfully");
-    }
-
 }
